@@ -34,7 +34,7 @@ jobs:
 
       - name: Build application
         run: |
-        echo build application binary in this section
+          echo build application binary in this section
 
       - name: Run go vet and lint
         run: |
