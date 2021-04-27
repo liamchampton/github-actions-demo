@@ -16,12 +16,39 @@ defaults:
     working-directory: ./
 
 jobs:
-  setup-build-publish-deploy:
-    name: Setup, Build, Publish, and Deploy
+  build:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
+      - name: Setup Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: '1.16.0'
+
+      - name: Install dependencies
+        run: |
+          go version
+          go get -u golang.org/x/lint/golint
+          echo install other deps in this section
+
+      - name: Build application
+        run: |
+        echo build application binary in this section
+
+      - name: Run go vet and lint
+        run: |
+          go vet .
+          golint .
+      
+      - name: Run testing
+        run: |
+          go test -v
+
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Install IBM CLI
         run: |
           curl -fsSL https://clis.cloud.ibm.com/install/linux | sh
